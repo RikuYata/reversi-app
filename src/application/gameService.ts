@@ -1,14 +1,15 @@
-import { connectMySQL } from "../dataaccess/connection";
+import { connectMySQL } from "../infrastructure/connection";
 
-import { GameGateway } from '../dataaccess/gameGateway'
-import { TurnGateway } from '../dataaccess/turnGateway'
 
-import {
-    DARK, LIGHT, EMPTY, INITIAL_BOARD
-} from "../application/constants";
 
-const gameGateway = new GameGateway();
-const turnGateway = new TurnGateway();
+import { TurnRepository } from "../domain/turn/turnRepository";
+import { firstTurn } from "../domain/turn/turn";
+import { GameRepository } from "../domain/game/gameRepository";
+import { Game } from "../domain/game/game";
+
+
+const turnRepository = new TurnRepository();
+const gameRepository = new GameRepository();
 
 
 export class GameService {
@@ -20,27 +21,16 @@ export class GameService {
         try {
             await conn.beginTransaction()
 
-            const gameRecord = await gameGateway.insert(conn, now);
+            const game = await gameRepository.save(conn, new Game(undefined, now))
+            if(!game){
+                throw new Error('game not exist');
+            }
+            if (!game.id) {
+                throw new Error('game.id is not exist');
+            }
 
-            const turnRecord = await turnGateway.insert(conn, gameRecord.id, 0, DARK, now)
-            const squareCount = INITIAL_BOARD.map((line) => line.length).reduce(
-                (v1, v2) => v1 + v2,
-                0
-            )
-
-            const squaresInsertSql = 'insert into squares (turn_id, x, y, disc) values ' + Array.from(Array(squareCount)).map(() => '(?, ?, ?, ?)').join(', ')
-
-            const squaresInsertValues: any[] = []
-            INITIAL_BOARD.forEach((line, y) => {
-                line.forEach((disc, x) => {
-                    squaresInsertValues.push(turnRecord.id)
-                    squaresInsertValues.push(x)
-                    squaresInsertValues.push(y)
-                    squaresInsertValues.push(disc)
-                })
-            })
-
-            await conn.execute(squaresInsertSql, squaresInsertValues)
+            const turn = firstTurn(game.id, game.startedAt);
+            await turnRepository.save(conn, turn);
 
             await conn.commit()
 

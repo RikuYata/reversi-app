@@ -1,0 +1,25 @@
+<mxfile host="65bd71144e">
+    <diagram id="BedUPd6VzN4qygKTdvOH" name="ページ1">
+        <mxGraphModel dx="1220" dy="817" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="4" style="edgeStyle=none;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="2" target="3">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="層分け&lt;br&gt;&lt;ul&gt;&lt;li&gt;３層&lt;/li&gt;&lt;li&gt;レイヤード&lt;/li&gt;&lt;li&gt;・・・&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="260" y="70" width="290" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" style="edgeStyle=none;html=1;entryX=0.471;entryY=-0.024;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="3" target="5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="各層の実装&lt;br&gt;&lt;ul&gt;&lt;li&gt;MVC, MVVM, MVP&lt;/li&gt;&lt;li&gt;トランザクションスクリプト、ドメインモデル&lt;/li&gt;&lt;li&gt;table Data Gateway, Repository&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="155" y="240" width="500" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="ドメインモデルをどう設計・実装するか" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="75" y="445" width="700" height="210" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

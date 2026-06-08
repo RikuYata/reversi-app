@@ -1,4 +1,4 @@
-import { Disc } from "./Disc";
+import { Disc } from "./disc";
 import { Point } from "./point";
 
 export class Move {

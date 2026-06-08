@@ -1,5 +1,5 @@
-import { Board } from "./board";
-import { Disc } from "./Disc";
+import { Board, initialBoard } from "./board";
+import { Disc } from "./disc";
 import { Move } from "./move";
 import { Point } from "./point";
 
@@ -13,7 +13,7 @@ export class Turn {
     ) { }
 
     placeNext(disc: Disc, point: Point): Turn {
-        // うとうとしたいしが、次の石のでない場合、置くことはできない
+        // 打とう とした石が、次の石のでない場合、置くことはできない
         if (disc !== this._nexDisc) {
             throw new Error('Invalid Disc');
         }
@@ -33,4 +33,41 @@ export class Turn {
             new Date()
         )
     }
+
+    get gameId() {
+        return this._gameId
+    }
+
+    get turnCount() {
+        return this._turnCount
+    }
+
+    get nextDisc (){
+        return this._nexDisc
+    }
+
+    get endAt (){
+        return this._endAt
+    }
+
+
+    get board(){
+        return this._board
+    }
+
+    get move(){
+        return this._move
+    }
+
+}
+
+export function firstTurn(gameId: number, endAt: Date){
+    return new Turn(
+        gameId,
+        0,
+        Disc.Dark,
+        undefined,
+        initialBoard,
+        endAt
+    )
 }
