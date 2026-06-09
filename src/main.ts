@@ -4,6 +4,8 @@ import 'express-async-errors'
 
 import { gameRouter } from './presentation/gameRouter'
 import { turnRouter } from './presentation/turnRouter'
+import { DomainError } from './domain/error/domainError'
+import { ApplicationError } from './application/error/applicationError'
 
 const PORT = 3000
 
@@ -25,6 +27,26 @@ app.listen(PORT, () => {
 })
 
 function errorHandler(err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) {
+
+    if(err instanceof DomainError)
+    {
+        res.status(400).json({
+            type: err.type,
+            message: err.message
+        })
+    }
+
+    if( err instanceof ApplicationError) {
+        switch(err.type)
+        {
+            case 'LatestGameNotFound':
+                res.status(404).json({
+                    type: err.type,
+                    message: err.message
+                })
+                return
+        }
+    }
     console.error('Unexpected error occured', err)
     res.status(500).send({
         message: 'Unexpected error occured'

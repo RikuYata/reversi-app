@@ -1,11 +1,12 @@
-import { connectMySQL } from "../infrastructure/connection";
+import { connectMySQL } from "../../infrastructure/connection";
 
 
 
-import { TurnRepository } from "../domain/turn/turnRepository";
-import { firstTurn } from "../domain/turn/turn";
-import { GameRepository } from "../domain/game/gameRepository";
-import { Game } from "../domain/game/game";
+import { TurnRepository } from "../../domain/model/turn/turnRepository";
+import { firstTurn } from "../../domain/model/turn/turn";
+import { GameRepository } from "../../domain/model/game/gameRepository";
+import { Game } from "../../domain/model/game/game";
+import { ApplicationError } from "../error/applicationError";
 
 
 const turnRepository = new TurnRepository();
@@ -23,7 +24,7 @@ export class GameService {
 
             const game = await gameRepository.save(conn, new Game(undefined, now))
             if(!game){
-                throw new Error('game not exist');
+                throw new ApplicationError('LatestGameNotFound','game not exist');
             }
             if (!game.id) {
                 throw new Error('game.id is not exist');

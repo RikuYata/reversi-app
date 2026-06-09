@@ -1,6 +1,6 @@
 import express from 'express'
 
-import { TurnService } from '../application/turnService'
+import { TurnService } from '../application/service/turnService'
 
 const turnService = new TurnService();
 
