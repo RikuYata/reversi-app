@@ -21,7 +21,7 @@ export class Board {
         }
 
         // ひっくり返せる点をリストアップ
-        const flipPoints = this.listFlipPoint(
+        const flipPoints = this.listFlipPoints(
             move
         )
 
@@ -47,7 +47,7 @@ export class Board {
         return new Board(newDiscs)
     }
 
-    private listFlipPoint(move: Move): Point[] {
+    private listFlipPoints(move: Move): Point[] {
         const flipPoints: Point[] = []
 
         const walledX = move.point.x + 1;
@@ -95,6 +95,40 @@ export class Board {
         checkFlipPoints(1, -1)
 
         return flipPoints
+    }
+
+    existValidMove(disc: Disc): boolean{
+        for(let y = 0; y < this._discs.length; y++)
+        {
+            const line = this._discs[y]
+
+            for(let x = 0; x < line.length; x++){
+                const discOnBoard = line[x]
+
+                // 空ではない点は無視
+                if(discOnBoard !== Disc.Empty)
+                {
+                    continue
+                }
+
+                const move = new Move(disc, new Point(x, y))
+                const flipPoints = this.listFlipPoints(move)
+
+                // ひっくり返せる点がある場合ｈ、おける場所がある
+                if(flipPoints.length !== 0){
+                    return true;
+                }
+            }
+        }
+
+        return false
+    }
+
+    count(disc: Disc): number{
+        return this._discs.map((line) => {
+            return line.filter((discOnBoard) => discOnBoard === disc).length
+
+        }).reduce((v1, v2) => v1 + v2, 0)
     }
 
     private wallDiscs(): Disc[][] {
